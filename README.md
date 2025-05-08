@@ -1,16 +1,24 @@
-# flutter_application_1
+🥬 Life Garden
+Life Garden é um aplicativo desenvolvido em Flutter que conecta diretamente produtores locais de verduras e legumes a consumidores finais, promovendo uma cadeia de abastecimento mais justa, sustentável e eficiente.
 
-A new Flutter project.
+🌱 Visão Geral
+O Life Garden visa eliminar intermediários, permitindo que pequenos agricultores comercializem seus produtos frescos diretamente com os consumidores. Isso garante alimentos de maior qualidade na mesa dos clientes e proporciona uma remuneração mais justa aos produtores.
 
-## Getting Started
+🚀 Funcionalidades
+Catálogo de Produtos: Exibição de verduras e legumes disponíveis, com fotos, descrições e preços.
 
-This project is a starting point for a Flutter application.
+Carrinho de Compras: Adição e remoção de produtos para facilitar a compra.
 
-A few resources to get you started if this is your first Flutter project:
+Pedidos e Pagamentos: Realização de pedidos com opções de pagamento seguras.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Rastreamento de Entregas: Acompanhamento em tempo real do status do pedido.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Avaliações e Comentários: Feedback dos consumidores sobre produtos e produtores.
+
+🛠️ Tecnologias Utilizadas
+Flutter: Framework para desenvolvimento multiplataforma.
+
+Dart: Linguagem de programação utilizada com Flutter.
+
+Firebase: Backend para autenticação, banco de dados em tempo real e armazenamento.
+

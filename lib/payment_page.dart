@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/produto.dart' as model;
-import 'home_page.dart'; // Importe a sua HomePage
+import 'home_page.dart';
 
 class PaymentPage extends StatefulWidget {
   final List<model.Produto> produtos;
@@ -122,7 +122,6 @@ class _PaymentPageState extends State<PaymentPage> {
               ElevatedButton.icon(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    // Todos os campos estão preenchidos
                     showDialog(
                       context: context,
                       builder:
@@ -136,13 +135,13 @@ class _PaymentPageState extends State<PaymentPage> {
                                 onPressed: () {
                                   Navigator.of(
                                     context,
-                                  ).pop(); // Fecha o diálogo
+                                  ).pop();
                                   Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                       builder: (_) => const HomePage(),
                                     ),
                                     (route) => false,
-                                  ); // Volta para a home
+                                  );
                                 },
                                 child: const Text("OK"),
                               ),

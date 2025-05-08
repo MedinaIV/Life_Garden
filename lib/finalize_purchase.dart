@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/payment_page.dart';
-import 'package:flutter_application_1/model/produto.dart'; // Usando diretamente Produto, sem prefixo
+import 'package:flutter_application_1/model/produto.dart';
 
 class FinalizePurchasePage extends StatelessWidget {
-  final List<Produto> produtos; // Usando a classe Produto sem prefixo
+  final List<Produto> produtos;
 
   const FinalizePurchasePage({super.key, required this.produtos});
 

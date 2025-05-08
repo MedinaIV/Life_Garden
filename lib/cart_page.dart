@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/model/produto.dart';
-import 'payment_page.dart'; // Importando a página de pagamento
+import 'payment_page.dart';
 
 class PaginaCarrinho extends StatelessWidget {
-  final List<Produto> produtos; // Recebe a lista de produtos
+  final List<Produto> produtos;
 
   const PaginaCarrinho({super.key, required this.produtos});
 
   @override
   Widget build(BuildContext context) {
     double total = produtos.fold(0, (soma, p) {
-      // Substitui a vírgula por ponto antes de converter para double
       double preco = double.parse(p.preco.replaceAll(",", "."));
       return soma + preco;
     });
@@ -71,7 +70,6 @@ class PaginaCarrinho extends StatelessWidget {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                // Navega para a página de pagamento passando os produtos
                 Navigator.push(
                   context,
                   MaterialPageRoute(

@@ -14,7 +14,7 @@ class RastreamentoPedidoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progresso = (statusIndex + 1) / etapas.length; // Calcular o progresso (percentual)
+    double progresso = (statusIndex + 1) / etapas.length;
 
     return Scaffold(
       appBar: AppBar(title: Text("Rastreamento de Pedido")),
@@ -22,19 +22,18 @@ class RastreamentoPedidoPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Barra de progresso única
+
             Column(
               children: [
                 LinearProgressIndicator(
-                  value: progresso, // Passa o progresso calculado
+                  value: progresso,
                   color: Colors.blue,
                   backgroundColor: Colors.grey[300],
                   minHeight: 10,
                 ),
-                SizedBox(height: 16), // Espaço entre a barra de progresso e as etapas
+                SizedBox(height: 16),
               ],
             ),
-            // Etapas do pedido
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: etapas.asMap().entries.map((entry) {
@@ -64,26 +63,24 @@ class RastreamentoPedidoPage extends StatelessWidget {
             ),
             SizedBox(height: 32),
 
-            // Botão para Acompanhar o pedido
             ElevatedButton(
               onPressed: () {
-                // Aqui você pode implementar a lógica para acompanhar o pedido
+
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text("Acompanhando o seu pedido...")),
                 );
               },
               child: Text("Acompanhe seu pedido"),
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue, // Cor de fundo
-                foregroundColor: Colors.white, // Cor do texto
-                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24), // Tamanho do botão
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 14, horizontal: 24),
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)), // Borda arredondada
+                    borderRadius: BorderRadius.circular(8)),
               ),
             ),
             SizedBox(height: 16),
 
-            // Texto dinâmico com o número do pedido
             Text.rich(
               TextSpan(
                 text: "Seu pedido ",

@@ -27,19 +27,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
   void _showConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text("Cadastro realizado"),
-        content: const Text("Sua conta foi criada com sucesso!"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context); // Fecha o diálogo
-              Navigator.pop(context); // Volta para login
-            },
-            child: const Text("OK"),
-          )
-        ],
-      ),
+      builder:
+          (_) => AlertDialog(
+            title: const Text("Cadastro realizado"),
+            content: const Text("Sua conta foi criada com sucesso!"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          ),
     );
   }
 
@@ -67,16 +68,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
             children: [
               TextFormField(
                 controller: _nomeController,
-                decoration: _buildInputDecoration("Nome completo", Icons.person),
-                validator: (value) => value == null || value.isEmpty ? "Digite seu nome" : null,
+                decoration: _buildInputDecoration(
+                  "Nome completo",
+                  Icons.person,
+                ),
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty
+                            ? "Digite seu nome"
+                            : null,
               ),
               const SizedBox(height: 12),
 
               TextFormField(
                 controller: _emailController,
                 decoration: _buildInputDecoration("Email", Icons.email),
-                validator: (value) =>
-                    value != null && value.contains("@") ? null : "Digite um e-mail válido",
+                validator:
+                    (value) =>
+                        value != null && value.contains("@")
+                            ? null
+                            : "Digite um e-mail válido",
               ),
               const SizedBox(height: 12),
 
@@ -85,49 +96,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 obscureText: _obscurePassword,
                 decoration: _buildInputDecoration("Senha", Icons.lock).copyWith(
                   suffixIcon: IconButton(
-                    icon: Icon(_obscurePassword ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
+                    icon: Icon(
+                      _obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
+                    ),
+                    onPressed:
+                        () => setState(
+                          () => _obscurePassword = !_obscurePassword,
+                        ),
                   ),
                 ),
-                validator: (value) => value != null && value.length >= 6
-                    ? null
-                    : "A senha deve ter no mínimo 6 caracteres",
+                validator:
+                    (value) =>
+                        value != null && value.length >= 6
+                            ? null
+                            : "A senha deve ter no mínimo 6 caracteres",
               ),
               const SizedBox(height: 12),
 
               TextFormField(
                 controller: _confirmSenhaController,
                 obscureText: _obscureConfirm,
-                decoration: _buildInputDecoration("Confirmar senha", Icons.lock_outline).copyWith(
+                decoration: _buildInputDecoration(
+                  "Confirmar senha",
+                  Icons.lock_outline,
+                ).copyWith(
                   suffixIcon: IconButton(
-                    icon: Icon(_obscureConfirm ? Icons.visibility : Icons.visibility_off),
-                    onPressed: () => setState(() => _obscureConfirm = !_obscureConfirm),
+                    icon: Icon(
+                      _obscureConfirm ? Icons.visibility : Icons.visibility_off,
+                    ),
+                    onPressed:
+                        () =>
+                            setState(() => _obscureConfirm = !_obscureConfirm),
                   ),
                 ),
-                validator: (value) =>
-                    value == _senhaController.text ? null : "As senhas não coincidem",
+                validator:
+                    (value) =>
+                        value == _senhaController.text
+                            ? null
+                            : "As senhas não coincidem",
               ),
               const SizedBox(height: 12),
 
               TextFormField(
                 controller: _telefoneController,
                 decoration: _buildInputDecoration("Telefone", Icons.phone),
-                validator: (value) => value == null || value.isEmpty ? "Digite o telefone" : null,
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty
+                            ? "Digite o telefone"
+                            : null,
               ),
               const SizedBox(height: 12),
 
               TextFormField(
                 controller: _enderecoController,
                 decoration: _buildInputDecoration("Endereço", Icons.home),
-                validator: (value) => value == null || value.isEmpty ? "Digite o endereço" : null,
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty
+                            ? "Digite o endereço"
+                            : null,
               ),
               const SizedBox(height: 12),
 
               TextFormField(
                 controller: _nascimentoController,
-                decoration: _buildInputDecoration("Data de nascimento", Icons.calendar_today),
+                decoration: _buildInputDecoration(
+                  "Data de nascimento",
+                  Icons.calendar_today,
+                ),
                 keyboardType: TextInputType.datetime,
-                validator: (value) => value == null || value.isEmpty ? "Digite a data" : null,
+                validator:
+                    (value) =>
+                        value == null || value.isEmpty ? "Digite a data" : null,
               ),
               const SizedBox(height: 12),
 
@@ -137,12 +180,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               const SizedBox(height: 12),
 
-              // Checkbox de termos
               Row(
                 children: [
                   Checkbox(
                     value: acceptedTerms,
-                    onChanged: (value) => setState(() => acceptedTerms = value ?? false),
+                    onChanged:
+                        (value) =>
+                            setState(() => acceptedTerms = value ?? false),
                   ),
                   Expanded(
                     child: Text.rich(
@@ -176,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: LifeGardenColors.primary, // Corrigido aqui
+                    backgroundColor: LifeGardenColors.primary,
                   ),
                   child: const Text("Cadastrar"),
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'orders_page.dart'; // Importe a página de pedidos
+import 'orders_page.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
           const SizedBox(height: 10),
 
           const Text(
-            "Lucas Scott",
+            "Marcelo Fiori",
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 30),
@@ -49,7 +49,6 @@ class ProfileScreen extends StatelessWidget {
           _buildMenuItem(icon: Icons.person, text: "Editar Perfil"),
           _buildMenuItem(icon: Icons.settings, text: "Configurações"),
           
-          // Item de menu "Meus Pedidos" com navegação
           InkWell(
             onTap: () {
               Navigator.push(

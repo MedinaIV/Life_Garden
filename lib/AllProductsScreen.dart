@@ -66,7 +66,6 @@ class AllProductsScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   ElevatedButton(
                     onPressed: () {
-                      // Ação de adicionar ao carrinho ou ver detalhes
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: LifeGardenColors.primary,

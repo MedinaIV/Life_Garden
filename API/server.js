@@ -17,10 +17,10 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('Conectado ao MongoDB'))
   .catch(err => console.error('Erro ao conectar ao MongoDB:', err));
 
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/orders', orderRoutes);
+app.use('/API/auth', authRoutes);
+app.use('/API/products', productRoutes);
+app.use('/API/cart', cartRoutes);
+app.use('/API/orders', orderRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {

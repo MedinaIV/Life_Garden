@@ -10,4 +10,8 @@ router.post('/', authMiddleware.authenticate, authMiddleware.isAdmin, productCon
 router.put('/:id', authMiddleware.authenticate, authMiddleware.isAdmin, productController.updateProduct);
 router.delete('/:id', authMiddleware.authenticate, authMiddleware.isAdmin, productController.deleteProduct);
 
+router.get('/promocoes', productController.getPromotions);
+router.patch('/:id/promocao', productController.setPromotion);
+router.patch('/:id/remover-promocao', productController.removePromotion);
+
 module.exports = router;

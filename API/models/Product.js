@@ -8,6 +8,7 @@ const productSchema = new mongoose.Schema({
   categoria: { type: String, enum: ['vegetais', 'frutas', 'outros'], default: 'vegetais' },
   estoque: { type: Number, default: 100 },
   createdAt: { type: Date, default: Date.now },
+  promocao: { type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('Product', productSchema);

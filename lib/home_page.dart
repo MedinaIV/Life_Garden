@@ -13,11 +13,105 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<Produto> carrinho = [];
+  int _selectedIndex = 0;
 
   void adicionarProdutoAoCarrinho(Produto produto) {
     setState(() {
       carrinho.add(produto);
     });
+  }
+
+  void _onItemTapped(int index) {
+    if (_selectedIndex == index) return;
+
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => PaginaCarrinho(produtos: carrinho),
+        ),
+      );
+    } else if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const ProfileScreen(),
+        ),
+      );
+    }
+  }
+
+  final TextEditingController _searchController = TextEditingController();
+  String filtroCategoria = 'Todos';
+
+  final List<Map<String, dynamic>> _produtos = [
+    {
+      'nome': 'Alface',
+      'imagem': 'assets/imagens/alface.png',
+      'preco': '3,50',
+      'categoria': 'Verdura',
+      'destaque': true,
+    },
+    {
+      'nome': 'Cenoura',
+      'imagem': 'assets/imagens/cenoura.jpg',
+      'preco': '4,20',
+      'categoria': 'Legumes',
+      'destaque': true,
+    },
+    {
+      'nome': 'Tomate',
+      'imagem': 'assets/imagens/tomate.jpg',
+      'preco': '5,00',
+      'categoria': 'Legumes',
+      'destaque': false,
+    },
+    {
+      'nome': 'Batata',
+      'imagem': 'assets/imagens/batata.jpg',
+      'preco': '3,80',
+      'categoria': 'Legumes',
+      'destaque': true,
+    },
+    {
+      'nome': 'Brócolis',
+      'imagem': 'assets/imagens/brocolis.jpg',
+      'preco': '6,30',
+      'categoria': 'Verdura',
+      'destaque': false,
+    },
+    {
+      'nome': 'Abóbora',
+      'imagem': 'assets/imagens/abobora.jpg',
+      'preco': '4,90',
+      'categoria': 'Legumes',
+      'destaque': true,
+    },
+  ];
+
+  List<Map<String, dynamic>> get _produtosFiltrados {
+    return _produtos.where((produto) {
+      final busca = _searchController.text.toLowerCase();
+      final nome = produto['nome'].toLowerCase();
+      final categoria = produto['categoria'];
+
+      if (filtroCategoria == 'Todos' ||
+          (filtroCategoria == 'Destaques' && produto['destaque']) ||
+          filtroCategoria == categoria) {
+        return nome.contains(busca);
+      }
+      return false;
+    }).toList();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -26,31 +120,10 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Image.asset('assets/imagens/logo.png.png', height: 40),
         backgroundColor: LifeGardenColors.primary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.shopping_cart),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaginaCarrinho(produtos: carrinho),
-                ),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.account_circle),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
-              );
-            },
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: 250,
@@ -68,75 +141,84 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 "Bem-vindo ao Life Garden!\nCompre verduras e legumes frescos direto do produtor.",
                 style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                  color: LifeGardenColors.primary,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Produtos em Destaque",
-                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: LifeGardenColors.primary,
                     ),
-                  ),
-                  TextButton(onPressed: () {}, child: const Text("Ver Todos")),
-                ],
+                textAlign: TextAlign.center,
               ),
             ),
-            SizedBox(
-              height: 260,
-              child: ListView(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: TextField(
+                controller: _searchController,
+                onChanged: (_) => setState(() {}),
+                decoration: const InputDecoration(
+                  hintText: 'Buscar produto...',
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(),
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                children: [
-                  _buildProductCard(
+                child: Row(
+                  children: [
+                    _filtroBotao('Todos'),
+                    _filtroBotao('Destaques'),
+                    _filtroBotao('Verdura'),
+                    _filtroBotao('Legumes'),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: GridView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: _produtosFiltrados.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                  childAspectRatio: 0.75,
+                ),
+                itemBuilder: (context, index) {
+                  final produto = _produtosFiltrados[index];
+                  return _buildProductCard(
                     context,
-                    'Alface',
-                    'assets/imagens/alface.png',
-                    '3,50',
-                  ),
-                  _buildProductCard(
-                    context,
-                    'Cenoura',
-                    'assets/imagens/cenoura.jpg',
-                    '4,20',
-                  ),
-                  _buildProductCard(
-                    context,
-                    'Tomate',
-                    'assets/imagens/tomate.jpg',
-                    '5,00',
-                  ),
-                  _buildProductCard(
-                    context,
-                    'Batata',
-                    'assets/imagens/batata.jpg',
-                    '3,80',
-                  ),
-                  _buildProductCard(
-                    context,
-                    'Brócolis',
-                    'assets/imagens/brocolis.jpg',
-                    '6,30',
-                  ),
-                  _buildProductCard(
-                    context,
-                    'Abóbora',
-                    'assets/imagens/abobora.jpg',
-                    '4,90',
-                  ),
-                ],
+                    produto['nome'],
+                    produto['imagem'],
+                    produto['preco'],
+                  );
+                },
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        selectedItemColor: LifeGardenColors.primary,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Início',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Carrinho',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Perfil',
+          ),
+        ],
       ),
     );
   }
@@ -150,9 +232,7 @@ class _HomePageState extends State<HomePage> {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 4,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4),
       child: Container(
-        width: 140,
         padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -205,6 +285,21 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _filtroBotao(String label) {
+    final bool selecionado = filtroCategoria == label;
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: ChoiceChip(
+        label: Text(label),
+        selected: selecionado,
+        onSelected: (_) => setState(() {
+          filtroCategoria = label;
+        }),
+        selectedColor: LifeGardenColors.primary,
       ),
     );
   }
